@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: randon-number-generator
+spec:
+  containers:
+  - name: alpine
+    image: alpine
+    volumeMounts:
+    - mountPath: /opt
+      name: data-volume
+  #NAO UTILIZAR EM PROD
+  volumes:
+  - name: data-volume
+    hostPath:
+      path: /data
+      type: Directory
+  - name: aws-ebs
+    awsElasticBlockStore:
+      volumeID: <volume-id>
+      fsType: ext4

@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aplicacao-deployment
+spec:
+  template:
+    metadata:
+      labels:
+        name: aplicacao-pod
+    spec:
+      containers:
+        - name: container-aplicacao-loja
+          image: rafanercessian/aplicacao-loja:v1
+          #Definindo metricas para auto scale
+          resources:
+            requests:
+              cpu: 400m
+          ports:
+            - containerPort: 80
+  selector:
+    matchLabels:
+      name: aplicacao-pod

@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ubuntu-sleeper
+spec:
+  containers:
+  - name: ubuntu
+    image: ubuntu-sleeper
+    ports:
+      - containerPort: 8080
+    env:
+      - name: APP_COLOR
+        value: pink
+      #SINGLE ENV - Quando você quer usar apenas um valor do configmap ou secret
+      - name: APP_COLOR
+        valueFrom:
+          configMapKeyRef:
+            name: app-config
+            key: APP_COLOR
+      - name: APP_COLOR
+        valeuForm:
+          secretKeyRef:
+            name: app-secret
+            key: APP_COLOR
+      #AS FILE
+    volumes:
+    - name: app-secret-volume
+      secret:
+        secretName: app-secret
